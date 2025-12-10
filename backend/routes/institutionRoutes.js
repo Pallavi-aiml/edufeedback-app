@@ -1,7 +1,7 @@
 // backend/routes/institutionRoutes.js
 const express = require('express');
 const router = express.Router();
-const Institution = require('../models/institution');
+const Institution = require('../models/Institution');
 
 // @route   GET /api/institutions
 // @desc    Get all institution names and IDs (public)
