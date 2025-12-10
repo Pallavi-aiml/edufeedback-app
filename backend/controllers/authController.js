@@ -1,6 +1,6 @@
 // backend/controllers/authController.js
 const User = require("../models/user");
-const Institution = require("../models/institution");
+const Institution = require("../models/Institution");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendEmail = require("../utils/sendEmail");
