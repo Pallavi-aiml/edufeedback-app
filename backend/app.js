@@ -14,7 +14,14 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+
+// --- FIX: UPDATED CORS SETTINGS ---
+// This allows your Vercel frontend to talk to this Railway backend without blocking.
+app.use(cors({
+    origin: '*', // Allow connections from ANY website (including Vercel)
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these actions
+    allowedHeaders: ['Content-Type', 'Authorization'] // Allow these headers
+}));
 
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
@@ -34,6 +41,6 @@ app.get('/', (req, res) => {
 
 // Server start
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => { // Added '0.0.0.0' to ensure it listens on all interfaces in Railway
+  console.log(`Server running at http://0.0.0.0:${PORT}`);
 });
