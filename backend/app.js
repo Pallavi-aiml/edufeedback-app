@@ -1,4 +1,4 @@
-// backend/app.js (or server.js)
+// backend/app.js
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -12,21 +12,25 @@ const institutionRoutes = require('./routes/institutionRoutes');
 
 const app = express();
 
+// --- 1. STRONGER CORS SETUP ---
+// This configuration dynamically allows your Vercel frontend and handles preflight checks.
+app.use(cors({
+    origin: true, // Dynamically allow the request origin (better than '*')
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true // Allow cookies/headers to be sent
+}));
+
+// Handle Preflight Requests (OPTIONS) for all routes
+app.options('*', cors());
+
 // Middleware
 app.use(express.json());
 
-// --- FIX: UPDATED CORS SETTINGS ---
-// This allows your Vercel frontend to talk to this Railway backend without blocking.
-app.use(cors({
-    origin: '*', // Allow connections from ANY website (including Vercel)
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow these actions
-    allowedHeaders: ['Content-Type', 'Authorization'] // Allow these headers
-}));
-
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('MongoDB connection error:', err));
+.then(() => console.log('✅ Connected to MongoDB'))
+.catch((err) => console.error('❌ MongoDB connection error:', err));
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -41,6 +45,6 @@ app.get('/', (req, res) => {
 
 // Server start
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => { // Added '0.0.0.0' to ensure it listens on all interfaces in Railway
-  console.log(`Server running at http://0.0.0.0:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => { 
+  console.log(`🚀 Server running at http://0.0.0.0:${PORT}`);
 });
