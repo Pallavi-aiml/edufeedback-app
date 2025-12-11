@@ -22,7 +22,7 @@ app.use(cors({
 }));
 
 // Handle Preflight Requests (OPTIONS) for all routes
-app.options('/(.*)', cors());
+app.options('/*splat', cors());
 
 // Middleware
 app.use(express.json());
