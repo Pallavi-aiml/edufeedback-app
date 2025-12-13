@@ -20,7 +20,7 @@ app.use(cors({
     credentials: true
 }));
 
-app.options('/.*/', cors()); // Fix: * works better for splat handling in express
+app.options('*', cors()); // Fix: * works better for splat handling in express
 
 // Middleware
 app.use(express.json());
