@@ -7,9 +7,9 @@ const sendEmail = async (to, subject, htmlContent) => {
   try {
     const data = await resend.emails.send({
       from: 'onboarding@resend.dev', 
-      to: 'pallavireddy13166@gmail.com',
-      subject: 'Hello World',
-  html: '<p>Congrats on sending your first email!</p>', 
+      to: to,               
+      subject: subject,     
+      html: htmlContent,
     });
 
     console.log("Email sent successfully via Resend:", data);
